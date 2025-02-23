@@ -1,4 +1,4 @@
-[中文版本](./readme-ch.md) | English Version
+[中文版本](./README-ch.md) | English Version
 
 # FileMaster - Multipurpose File Processing System
 
