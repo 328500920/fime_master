@@ -432,7 +432,7 @@ def main():
     try:
         system = FileProcessingSystem()
         demo.launch(
-            server_name="127.0.0.1",  # 改为本地回环地址
+            server_name="0.0.0.0",  # 改为本地回环地址
             server_port=7860,
             share=True,             # 启用分享链接
             debug=True,
