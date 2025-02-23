@@ -1,0 +1,5 @@
+# Linux特定依赖
+python-uno>=1.0.0  # LibreOffice支持
+unoconv>=0.9.0  # 文档格式转换
+python-cairo>=1.20.0  # PDF处理支持
+pypandoc==1.15  # 文档转换

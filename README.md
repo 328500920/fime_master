@@ -44,6 +44,8 @@ FileMaster is a Python-based web application system for file processing, offerin
 ```bash
 git clone [repository-url]
 cd FileMaster
+conda create -n filemaster python=3.10
+conda activate filemaster
 pip install -r requirements.txt
 ```
 

@@ -1,3 +1,4 @@
 /.gradio
 .gradio
 __pycache__/
+data

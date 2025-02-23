@@ -1,0 +1,3 @@
+# Windows特定依赖
+pywin32>=305  # 用于Excel到PDF的转换
+docx2pdf==0.1.8  # Windows下的Word到PDF转换

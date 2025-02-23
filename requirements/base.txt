@@ -1,0 +1,22 @@
+# Web UI框架
+gradio>=3.50.0
+
+# 文档处理
+python-docx==0.8.11
+markdown==3.4.1
+pypandoc==1.11
+
+# 思维导图
+xmind-sdk>=1.1a0
+xmindparser>=1.0.9
+
+# Excel处理基础
+pandas>=2.0.0
+openpyxl>=3.1.0
+
+# 工具库
+python-dateutil>=2.8.2
+argparse>=1.4.0
+numpy>=1.24.0
+json5>=0.9.14
+pathlib>=1.0.1

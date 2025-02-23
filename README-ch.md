@@ -48,6 +48,8 @@ FileMaster是一个基于Python的文件处理Web应用系统，提供丰富的�
 ```bash
 git clone [repository-url]
 cd FileMaster
+conda create -n filemaster python=3.10
+conda activate filemaster
 pip install -r requirements.txt
 ```
 

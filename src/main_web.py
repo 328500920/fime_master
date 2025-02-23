@@ -1,12 +1,10 @@
 import gradio as gr
 import os
-import tempfile
 import shutil
 import datetime
 import hashlib
-import json
-from file_master_core import xmind_to_md, markdown_to_xmind
 import logging
+import pandas as pd  # 添加这行
 from config import Config
 from factory import ConverterFactory
 
@@ -85,43 +83,83 @@ def convert_file_web(file_obj, menu_option):
         input_path = os.path.join(INPUT_DIR, timestamped_filename)
         shutil.copy2(file_obj.name, input_path)
 
-        # 根据菜单选项执行对应转换
-        if menu_option == "Xmind转Markdown":
+        converter_type = None
+        output_ext = None
+        
+        # 根据菜单选项选择转换器
+        if menu_option == "docx转PDF":
+            if not file_ext.lower() in ['.doc', '.docx']:
+                return None, "请上传Word文件"
+            converter_type = 'docx_to_pdf'
+            output_ext = '.pdf'
+        elif menu_option == "docx转markdown":
+            if not file_ext.lower() in ['.doc', '.docx']:
+                return None, "请上传Word文件"
+            converter_type = 'docx_to_md'
+            output_ext = '.md'
+        elif menu_option == "Markdown转Word":
+            if not file_ext.lower() == '.md':
+                return None, "请上传Markdown文件"
+            converter_type = 'md_to_docx'
+            output_ext = '.docx'
+        elif menu_option == "Markdown转PDF":
+            if not file_ext.lower() == '.md':
+                return None, "请上传Markdown文件"
+            converter_type = 'md_to_pdf'
+            output_ext = '.pdf'
+        elif menu_option == "Xmind转Markdown":
             if not file_ext.lower() == '.xmind':
                 return None, "请上传.xmind文件"
-            output_path = os.path.join(OUTPUT_DIR, f"{file_name}_{get_timestamp()}.md")
-            xmind_to_md(input_path, output_path)
+            converter_type = 'xmind_to_md'
+            output_ext = '.md'
             
         elif menu_option == "Markdown转Xmind":
             if not file_ext.lower() == '.md':
                 return None, "请上传.md文件"
-            output_path = os.path.join(OUTPUT_DIR, f"{file_name}_{get_timestamp()}.xmind")
-            markdown_to_xmind(input_path, output_path)
+            converter_type = 'md_to_xmind' 
+            output_ext = '.xmind'
             
-        elif menu_option == "docx转PDF":
-            if not file_ext.lower() in ['.doc', '.docx']:
-                return None, "请上传Word文件"
-            output_path = os.path.join(OUTPUT_DIR, f"{file_name}_{get_timestamp()}.pdf")
-            word_to_pdf(input_path, output_path)
+        # 在选择转换器的代码块中添加新的选项
+        if menu_option == "Xmind转Word":
+            if not file_ext.lower() == '.xmind':
+                return None, "请上传.xmind文件"
+            converter_type = 'xmind_to_docx'
+            output_ext = '.docx'
+            
+        # 添加新的转换选项
+        elif menu_option == "Excel转CSV":
+            if not file_ext.lower() in ['.xlsx', '.xls']:
+                return None, "请上传Excel文件"
+            converter_type = 'excel_to_csv'
+            # 如果Excel有多个sheet，使用zip扩展名
+            excel_file = pd.ExcelFile(file_obj.name)
+            output_ext = '.zip' if len(excel_file.sheet_names) > 1 else '.csv'
+        elif menu_option == "CSV转Excel":
+            if not file_ext.lower() == '.csv':
+                return None, "请上传CSV文件"
+            converter_type = 'csv_to_excel'
+            output_ext = '.xlsx'
+        elif menu_option == "Excel转PDF":
+            if not file_ext.lower() in ['.xlsx', '.xls']:
+                return None, "请上传Excel文件"
+            converter_type = 'excel_to_pdf'
+            output_ext = '.pdf'
             
         # ...其他转换类型的处理...
-            
-        return output_path, "转换成功"
+        
+        if converter_type and output_ext:
+            output_path = os.path.join(OUTPUT_DIR, f"{file_name}_{get_timestamp()}{output_ext}")
+            converter = ConverterFactory.get_converter(converter_type)
+            if converter.convert(input_path, output_path):
+                return output_path, "转换成功"
+            else:
+                return None, "转换失败"
+                
+        return None, "不支持的转换类型"
         
     except Exception as e:
         return None, f"转换失败: {str(e)}"
 
-def update_conversion_type(file_obj):
-    """根据上传文件类型自动设置转换类型"""
-    if file_obj is None:
-        return gr.update()
-    
-    file_ext = os.path.splitext(file_obj.name)[1].lower()
-    if file_ext == '.xmind':
-        return gr.update(value="XMind to Markdown")
-    elif file_ext == '.md':
-        return gr.update(value="Markdown to XMind")
-    return gr.update()
 
 def parse_menu_file(file_path):
     """解析markdown菜单文件为三级树形结构"""
@@ -355,12 +393,6 @@ with gr.Blocks(
         outputs=[login_page, main_page, login_msg]
     )
     
-    # # 文件上传时自动更新转换类型
-    # file_input.change(
-    #     fn=update_conversion_type,
-    #     inputs=[file_input],
-    #     outputs=[conversion_type]
-    # )
     
     # 处理文件转换
     convert_btn.click(
@@ -375,7 +407,7 @@ with gr.Blocks(
             return gr.update(choices=[], visible=False), gr.update(choices=[], visible=False)
         
         for l1_item in menu_tree:
-            if l1_item["name"] == l1_selection:
+            if (l1_item["name"] == l1_selection):
                 l2_choices = [item["name"] for item in l1_item["children"]]
                 return gr.update(choices=l2_choices, visible=True), gr.update(choices=[], visible=False)
         return gr.update(choices=[], visible=False), gr.update(choices=[], visible=False)
