@@ -14,6 +14,13 @@ from factory import ConverterFactory
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+INPUT_DIR = os.path.join(os.path.dirname(__file__), "./../data/input")
+OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "./../data/output")
+DEFAULT_USER = {
+    "settle": hashlib.md5("Start#1900**".encode()).hexdigest()
+}
+
+
 class FileProcessingSystem:
     def __init__(self):
         self.config = Config()
@@ -421,6 +428,19 @@ with gr.Blocks(
         outputs=[content_group, title, description]
     )
 
+def main():
+    try:
+        system = FileProcessingSystem()
+        demo.launch(
+            server_name="127.0.0.1",  # 改为本地回环地址
+            server_port=7860,
+            share=True,             # 启用分享链接
+            debug=True,
+            show_api=False         # 关闭 API 文档
+        )
+    except Exception as e:
+        logging.error(f"程序启动失败: {str(e)}")
+        input("按任意键退出...")  # 防止窗口立即关闭
+
 if __name__ == "__main__":
-    app = FileProcessingSystem()
-    # ... 启动代码 ...
+    main()

@@ -11,9 +11,9 @@ class Config:
         return cls._instance
     
     def _init_config(self):
-        self.INPUT_DIR = "/home/subt/tools_web/input"
-        self.OUTPUT_DIR = "/home/subt/tools_web/output"
-        self.TEMP_DIR = "/home/subt/tools_web/temp"
+        self.INPUT_DIR = "./data/input"
+        self.OUTPUT_DIR = "./data/output"
+        self.TEMP_DIR = "./data/temp"
         
         # 用户配置
         self.DEFAULT_USER = {
