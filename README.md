@@ -1,58 +1,61 @@
 [中文版本](./README-ch.md) | English Version
 
-# FileMaster - Multipurpose File Processing System
+# File Master
 
-FileMaster is a Python-based web application system for file processing, offering rich file conversion and processing capabilities with modular design and support for multiple file formats.
+A versatile file conversion and processing tool with web interface.
 
 ## Features
 
-- Document Conversion
-  - Word/PDF conversion
-  - Markdown format conversion
-  - Mind map conversion
-- Spreadsheet Processing
-  - Excel/CSV conversion
-  - Excel sheet processing
-  - Table merging
-- Mind Map Processing
-  - Xmind to Markdown conversion
-  - Mind map format conversion
-- File Security
-  - PDF encryption/decryption
-  - Watermark addition/removal
-  - Digital signatures
+### Document Conversion
+
+- Convert DOCX/PDF/Markdown (any to any)
+- Support batch conversion
+- Preserve document formatting
+
+### Spreadsheet Processing
+
+- Excel/CSV/PDF conversion
+- Multi-sheet handling
+- Data validation support
+
+### Mind Map Processing
+
+- Convert between Xmind/Markdown/DOCX
+- Preserve mind map structure
+- Support attachments
 
 ## Technical Architecture
 
-- Frontend: Gradio UI Framework
-- Backend: Python
-- Design Patterns: Factory Pattern, Singleton Pattern
+- Frontend:
+  - Gradio UI Framework
+  - Responsive design
+- Backend:
+  - Python 3.10+
+  - FastAPI support
 - Core Components:
-  - Converter Factory
-  - File Processing Engine
-  - Configuration Manager
+  - Unified Converter API
+  - Async Processing Engine
+  - Format Detection
 
 ## Quick Start
 
 ### Requirements
 
-- Python 3.7+
+- Python 3.10+
 - Dependencies: gradio, xmind, markdown
 
 ### Installation
 
 ```bash
-git clone [repository-url]
+git clone https://github.com/fuxingwang/filemaster.git
 cd FileMaster
-conda create -n filemaster python=3.10
-conda activate filemaster
 pip install -r requirements.txt
 ```
 
 ### Running
 
 ```bash
-python src/file_master_web.py
+python src/main_web.py
 ```
 
 ## API Usage
@@ -78,7 +81,7 @@ FileMaster/
 │   │   └── ...
 │   ├── factory.py
 │   ├── config.py
-│   ├── file_master_web.py
+│   ├── main_web.py
 │   └── menu.md
 ├── requirements.txt
 └── README.md

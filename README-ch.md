@@ -1,52 +1,53 @@
-中文版本 | [English Version](./readme.md)
+中文版本 | [English Version](./README.md)
 
 # FileMaster - 多功能文件处理系统
 
-FileMaster是一个基于Python的文件处理Web应用系统，提供丰富的文件转换、处理功能，采用模块化设计，支持多种文件格式的转换与处理。
+FileMaster是一个基于Python的文件处理Web应用系统，提供高效的文件转换与处理功能。
 
 ## 功能特性
 
-- 文档转换
+### 文档转换
 
-  - Word/PDF互转
-  - Markdown格式转换
-  - 思维导图转换
-- 表格处理
+- DOCX/PDF/Markdown互转
+- 批量转换支持
+- 保持文档格式
 
-  - Excel/CSV互转
-  - Excel分表处理
-  - 表格合并功能
-- 思维导图处理
+### 表格处理
 
-  - Xmind与Markdown互转
-  - 思维导图格式转换
-- 文件安全
+- Excel/CSV/PDF转换
+- 多表格处理
+- 数据校验支持
 
-  - PDF加密解密
-  - 水印添加/移除
-  - 文件数字签名
+### 思维导图处理
+
+- Xmind/Markdown/DOCX互转
+- 保持思维导图结构
+- 支持附件处理
 
 ## 技术架构
 
-- 前端：Gradio UI框架
-- 后端：Python
-- 设计模式：工厂模式、单例模式
+- 前端：
+  - Gradio UI框架
+  - 响应式设计
+- 后端：
+  - Python 3.10+
+  - FastAPI支持
 - 核心组件：
-  - 转换器工厂
-  - 文件处理引擎
-  - 配置管理器
+  - 统一转换器API
+  - 异步处理引擎
+  - 格式自动检测
 
 ## 快速开始
 
 ### 环境要求
 
-- Python 3.7+
+- Python 3.10+
 - 依赖包：gradio, xmind, markdown
 
 ### 安装
 
 ```bash
-git clone [repository-url]
+git clone https://github.com/fuxingwang/filemaster.git
 cd FileMaster
 conda create -n filemaster python=3.10
 conda activate filemaster
@@ -56,7 +57,7 @@ pip install -r requirements.txt
 ### 运行
 
 ```bash
-python src/file_master_web.py
+python src/main_web.py
 ```
 
 ## API使用说明
@@ -82,7 +83,7 @@ FileMaster/
 │   │   └── ...
 │   ├── factory.py
 │   ├── config.py
-│   ├── file_master_web.py
+│   ├── main_web.py
 │   └── 文件处理系统菜单.md
 ├── requirements.txt
 └── README.md
