@@ -116,6 +116,6 @@ MIT License
 
 ## 联系方式
 
-- 项目维护者：[Your Name]
-- Email：[Your Email]
-- GitHub：[Your GitHub]
+- 项目维护者：[fuxingwang]
+- Email：[328500920@qq.com]
+- GitHub：[fuxingwang]

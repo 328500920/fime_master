@@ -112,6 +112,6 @@ MIT License
 
 ## Contact
 
-- Maintainer: [Your Name]
-- Email: [Your Email]
-- GitHub: [Your GitHub]
+- Maintainer: [fuxingwang]
+- Email: [328500920@qq.com]
+- GitHub: [fuxingwang]
